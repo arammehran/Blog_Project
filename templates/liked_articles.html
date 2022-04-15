@@ -1,0 +1,45 @@
+{% extends "base.html"%}
+
+{% block content %}
+    {% for article in user.blog_post.all%}
+        <article class="media content-section">
+          <div class="media-body">
+            <div class="article-metadata">
+              <a class="mr-2" href="#">{{ article.author.name }}</a>
+              <small class="text-muted">{{ article.created_at }}</small>
+                <small class="text-muted"> <strong>{{ article.like_count }}</strong> Likes</small>
+            </div>
+                <h2><a class="article-title" >{{ article.title }}</a></h2>
+                <p class="article-content">{{ article.content }}</p>
+                <hr>
+              {% if user.is_authenticated %}
+                {% if user.role == 'r' %}
+                {% if article not in user.blog_post.all %}
+                <form action="{% url 'like-article' article.id 1 %}"
+                      method="POST">
+                    {% csrf_token %}
+                    <button type="submit", value="{{article.id}}", class="btn btn-outline-info btn-sm">Like</button>
+                </form>
+                {% else %}
+                 <form action="{% url 'like-article' article.id 0 %}"
+                      method="POST">
+                    {% csrf_token %}
+                    <button type="submit", value="{{article.id}}", class="btn btn-danger btn-sm">Unlike</button>
+                </form>
+                    {% endif %}
+                {% endif %}
+              {% endif %}
+                <h5>Comments...</h5>
+                {% if not article.comments.all %}
+                    No Comments Yet <a href="{% url 'comment-create' article.id %}">Add Comment</a>
+                    {% else %}
+              <a href="{% url 'comment-create' article.id %}">Add Comment</a><br><br>
+                        {% for one in article.comments.all %}
+              <h6>--> {{one.reader.name}} <strong>| {{one.created_at}}</strong><br><p class="article-content">{{one.content}}</p></h6>
+
+                        {% endfor %}
+                {% endif %}
+            </div>
+        </article>
+    {%  endfor   %}
+{% endblock content %}

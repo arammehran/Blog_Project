@@ -1,0 +1,19 @@
+{% extends "base.html"%}
+
+{% block content %}
+        {% for one in user.Followers_reader.all %}
+        <article class="media content-section">
+          <div class="media-body">
+                <h2><a class="article-title" >{{ one.author.name }}</a></h2>
+                <p class="article-content"><strong>Registered as: </strong>{{ one.author.get_role_display }}</p>
+              <p class="article-content"><strong>Joined on:</strong> {{ one.author.created_at }}</p>
+          </div>
+             <hr>
+                 <form action="{% url 'follow-author' one.author.id 0 %}"
+                      method="POST">
+                    {% csrf_token %}
+                    <button type="submit", class="btn btn-danger btn-sm">Unfollow</button>
+                </form>
+        </article>
+        {% endfor %}
+{% endblock content %}

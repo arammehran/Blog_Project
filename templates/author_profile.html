@@ -1,0 +1,27 @@
+{% extends "base.html"%}
+
+{% block content %}
+        <article class="media content-section">
+          <div class="media-body">
+                <h2><a class="article-title" >{{ author.name }}</a></h2>
+                <p class="article-content"><strong>Registered as: </strong>{{ author.get_role_display }}</p>
+              <p class="article-content"><strong>Joined on:</strong> {{ author.created_at }}</p>
+          </div>
+             <hr>
+                {% if user.role == 'r' %}
+                {% if follower not in user.Followers_reader.all %}
+                <form action="{% url 'follow-author' author.id 1 %}"
+                      method="POST">
+                    {% csrf_token %}
+                    <button type="submit", class="btn btn-outline-info btn-sm">Follow</button>
+                </form>
+                {% else %}
+                 <form action="{% url 'follow-author' author.id 0  %}"
+                      method="POST">
+                    {% csrf_token %}
+                    <button type="submit", class="btn btn-danger btn-sm">Unfollow</button>
+                </form>
+                    {% endif %}
+                {% endif %}
+        </article>
+{% endblock content %}

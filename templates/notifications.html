@@ -1,0 +1,34 @@
+{% extends "base.html"%}
+
+{% block content %}
+    <div>
+        <form action="{% url 'read-notifications' %}"
+              method="POST">
+            {% csrf_token %}
+            <button type="submit", class="btn btn-outline-info btn-sm">Mark all as read</button>
+        </form>
+    </div><hr>
+    {% for one in notifications%}
+        {% if not one.is_read%}
+        <article class="media content-section">
+          <div class="media-body">
+            <div class="article-metadata">
+              <a class="mr-2", style="color:Red" ,href="{% url 'author-profile' one.author.id %}">{{ one.author.name }}</a>
+                <small class="text-muted" ><strong>Posted on:</strong>&nbsp;{{ one.created_at }}</small>
+            </div>
+                <p class="article-content" style="color:Red">{{ one.content }}</p>
+            </div>
+        </article>
+            {% else %}
+        <article class="media content-section">
+          <div class="media-body">
+            <div class="article-metadata">
+              <a class="mr-2" href="{% url 'author-profile' one.author.id %}">{{ one.author.name }}</a>
+                <small class="text-muted" ><strong>Posted on:</strong>&nbsp;{{ one.created_at }}</small>
+            </div>
+                <p class="article-content">{{ one.content }}</p>
+            </div>
+        </article>
+        {% endif %}
+    {%  endfor   %}
+{% endblock content %}
