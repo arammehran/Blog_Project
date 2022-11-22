@@ -39,7 +39,7 @@ class LikedArticleView(ListView):
 
 class LikeView(View):
     def post(self, request, article_id, like):
-        article_obj = Article.objects.filter(id=article_id).first()
+        article_obj = Article.objects.get(id=article_id)
         if like:
             article_obj.likes.add(request.user)
             article_obj.like_count += 1
@@ -115,7 +115,7 @@ class CommentCreateView(View):
         form = self.form_class(request.POST)
         if form.is_valid():
             obj = form.save(commit=False)
-            article_obj = Article.objects.filter(id=article_id).first()
+            article_obj = Article.objects.get(id=article_id)
             obj.reader = user
             obj.articles = article_obj
             increment_count(a=user, b=article_obj)

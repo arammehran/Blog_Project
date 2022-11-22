@@ -10,8 +10,9 @@ def create_article(sender, instance, created, **kwargs):
         follower_obj = Followers.objects.filter(author=instance.author).first()
         stuff = 'The author named "{}" has posted' \
                 ' an Article with title "{}"'.format(instance.author.name, instance.title)
-        notification_objects = [Notifications(author=instance.author, reader=one, content=stuff)
-                                for one in follower_obj.reader.all()]
-        Notifications.objects.bulk_create(notification_objects)
+        if follower_obj:
+            notification_objects = [Notifications(author=instance.author, reader=one, content=stuff)
+                                    for one in follower_obj.reader.all()]
+            Notifications.objects.bulk_create(notification_objects)
 
 
