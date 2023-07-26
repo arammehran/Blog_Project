@@ -69,9 +69,3 @@ def logout_view(request):
 class PasswordsChangeView(PasswordChangeView):
     form_class = PasswordChangeForm
     success_url = reverse_lazy('password_pass')
-
-
-
-
-
-

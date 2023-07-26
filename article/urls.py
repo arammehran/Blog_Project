@@ -12,5 +12,4 @@ urlpatterns = [
     path('Liked-Articles/', LikedArticleView.as_view(), name='liked-articles'),
     path('notifications/', NotificationsView.as_view(), name='notifications'),
     path('readNotifications/', NotificationReadView.as_view(), name='read-notifications'),
-
 ]

@@ -14,7 +14,3 @@ class UserRegistrationForm(UserCreationForm):
             "password2",
 
         ]
-
-
-
-

@@ -27,5 +27,3 @@ class Notifications(BaseModel):
     reader = models.ForeignKey(User, related_name='receiver', on_delete=models.CASCADE)
     content = models.TextField()
     is_read = models.BooleanField(default=False)
-
-

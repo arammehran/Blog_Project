@@ -73,17 +73,3 @@ class User(AbstractBaseUser, BaseModel):
 class Followers(BaseModel):
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name="Followers_author")
     reader = models.ManyToManyField(User, related_name="Followers_reader")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
