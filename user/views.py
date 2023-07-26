@@ -22,7 +22,7 @@ class AuthorProfileView(View):
 
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
-            author_obj = User.objects.filter(id=kwargs.get('id')).first()
+            author_obj = User.objects.get(id=kwargs.get('id'))
             follower_obj, created = Followers.objects.get_or_create(author=author_obj)
             context = {
                 'author': author_obj,
