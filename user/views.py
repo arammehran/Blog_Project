@@ -36,7 +36,7 @@ class AuthorProfileView(View):
 class FollowAuthorView(View):
     def post(self, request, follow, *args, **kwargs):
         user = request.user
-        author_obj = User.objects.filter(id=kwargs.get('id')).first()
+        author_obj = User.objects.get(id=kwargs.get('id'))
         follower_obj = Followers.objects.get(author=author_obj)
         if follow:
             follower_obj.reader.add(user)
